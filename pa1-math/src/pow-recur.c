@@ -14,6 +14,6 @@ double pow_recur( double base, int exponent )
   // You may also create helper functions if needed
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-  return 0;
+  return base * exponent;
 }
 

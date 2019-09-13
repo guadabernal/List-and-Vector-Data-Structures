@@ -12,6 +12,6 @@ double pow_iter( double base, int exponent )
   // Implement this function
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-  return 0;
+  return base * exponent;
 }
 

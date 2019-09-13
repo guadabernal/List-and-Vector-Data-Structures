@@ -15,6 +15,6 @@ int sqrt_recur( int x )
   // You may also create helper functions if needed
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-  return 0;
+  return x;
 }
 

@@ -13,6 +13,6 @@ int sqrt_iter( int x )
   // Implement this function
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-  return 0;
+  return x;
 }
 
