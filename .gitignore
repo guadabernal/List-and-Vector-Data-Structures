@@ -27,3 +27,7 @@ pa1-math/src/pow-iter
 pa1-math/src/pow-recur
 pa1-math/src/sqrt-iter
 pa1-math/src/sqrt-recur
+pa1-math/src/pow-iter-adhoc
+pa1-math/src/pow-recur-adhoc
+pa1-math/src/sqrt-iter-adhoc
+pa1-math/src/sqrt-recur-adhoc
