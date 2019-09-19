@@ -1,63 +1,80 @@
 #=========================================================================
 # CMake script for PA1
 #=========================================================================
-# Author: Tuan Ta, Yanghui Ou
-# Date  : Sep 2019
+# To add new implementations or new tests, simply append your new file to
+# the corresponding list.
+#
+# Author: Yanghui Ou
+#   Date: Sep 15, 2019
 #
 
-#-------------------------------------------------------------------------
-# List of implementations in this PA
-#-------------------------------------------------------------------------
-# Please add any new implementation to the list. The implementation's name
-# does not include any file extension (e.g., ".c" and ".cpp").
+set(SRC_FILES
+  pow-iter.c
+  pow-recur.c
+  sqrt-iter.c
+  sqrt-recur.c
+)
 
-set(IMPLS pow-iter
-          pow-recur
-          sqrt-iter
-          sqrt-recur)
+set(TEST_MILESTONE_FILES
+  pow-iter-basic-test.c
+  pow-iter-directed-test.c
+  pow-iter-random-test.c
+  sqrt-iter-basic-test.c
+  sqrt-iter-directed-test.c
+  sqrt-iter-random-test.c
+)
 
-#-------------------------------------------------------------------------
-# List of unit tests in this PA
-#-------------------------------------------------------------------------
-# Please add any new test to the list. The test's name does not include
-# any file extension (e.g., ".c" and ".cpp").
+set(TEST_ALL_FILES
+  ${TEST_MILESTONE_FILES}
+  pow-recur-basic-test.c
+  pow-recur-directed-test.c
+  pow-recur-random-test.c
+  sqrt-recur-basic-test.c
+  sqrt-recur-directed-test.c
+  sqrt-recur-random-test.c
+)
 
-set(TESTS pow-iter-basic-test
-          pow-iter-directed-test
-          pow-iter-random-test
-          sqrt-iter-basic-test
-          sqrt-iter-directed-test
-          sqrt-iter-random-test
-          pow-recur-basic-test
-          pow-recur-directed-test
-          pow-recur-random-test
-          sqrt-recur-basic-test
-          sqrt-recur-directed-test
-          sqrt-recur-random-test)
+set (EVAL_FILES
+  pow-iter-eval.c
+  pow-recur-eval.c
+  pow-std-eval.c
+  sqrt-iter-eval.c
+  sqrt-recur-eval.c
+  sqrt-std-eval.c
+)
 
-#-------------------------------------------------------------------------
+#=========================================================================
 # !!!!DO NOT TOUCH THE FOLLOWING CODE!!!!
+#=========================================================================
+
+#-------------------------------------------------------------------------
+# remove_extension
+#-------------------------------------------------------------------------
+# Removes the file extension. For example:
+# remove_extension(IMPL, "pow-iter.c") stores "pow-iter" into IMPL.
+
+function(remove_extension VARNAME FILE_NAME)
+  string(REGEX REPLACE "\\.[^.]*$" "" NAME_WITHOUT_EXT ${FILE_NAME})
+  set(${VARNAME} "${NAME_WITHOUT_EXT}" PARENT_SCOPE)
+endfunction()
+
+#-------------------------------------------------------------------------
+# Set up environment
 #-------------------------------------------------------------------------
 
 cmake_minimum_required(VERSION 2.8)
 enable_language(C)
-
-# ctest configs
-include(CTest)
 enable_testing()
+project(pa1-math)
 
-# Set a default build type if none was specified
-set(default_build_type "Debug")
+# Set and cache the build type
+set(default_build_type "debug")
+set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "debug" "eval" )
 
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
-  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
-      STRING "Choose the type of build." FORCE)
-
-  # Set the possible values of build type
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
-    "Debug" "Eval" )
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "${default_build_type}")
 endif()
+message(STATUS "Setting build type to '${CMAKE_BUILD_TYPE}'")
 
 # Flags for GCC
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic-errors -Werror")
@@ -67,37 +84,68 @@ set(CMAKE_C_FLAGS_EVAL "-O3")
 # Path to this PA's source files
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
+set(EVAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/eval")
 
 # Include path to this PA's header files
 include_directories(${SRC_DIR})
 
 #-------------------------------------------------------------------------
-# Prepares a list of testing targets for each implementation
+# Link source files into a library
 #-------------------------------------------------------------------------
 
-foreach(TEST ${TESTS})
+foreach(SRC_FILE ${SRC_FILES})
+  set(LIB_SRCS ${LIB_SRCS} "${SRC_DIR}/${SRC_FILE}")
+endforeach(SRC_FILE)
 
-  # Extract app names from test names
-  # assuming test names are in the following format
-  # {implementation's name}-{implementation's version}-{test's name}-tests
+add_library(lib${PROJECT_NAME} ${LIB_SRCS})
 
-  string(REPLACE "-" ";" TOKENS ${TEST})
-  list(REMOVE_AT TOKENS 2 3)
-  string(REPLACE ";" "-" SRC "${TOKENS}")
+#-------------------------------------------------------------------------
+# Test targets
+#-------------------------------------------------------------------------
 
-  # Get source files
-  set(IMPL_SRC "${SRC_DIR}/${SRC}.c")
-  set(TEST_SRC "${TEST_DIR}/${TEST}.c")
+add_custom_target(check COMMAND ctest "--test-timeout=10")
 
-  # Add tests
-  add_executable(${TEST} ${TEST_SRC} ${IMPL_SRC})
-  target_link_libraries(${TEST} m)
-  add_test(${TEST} ${TEST})
+foreach(TEST_FILE ${TEST_ALL_FILES})
 
-endforeach(TEST)
+  remove_extension(TEST_BIN ${TEST_FILE})
+  set(TEST_SRC "${TEST_DIR}/${TEST_FILE}")
 
-# Add a target to run all tests using ctest
-add_custom_target(check
-                  COMMAND echo "Running all unit tests ..."
-                  COMMAND ctest "--test-timeout=10"
-                  DEPENDS ${TESTS})
+  # Add test
+  add_executable(${TEST_BIN} EXCLUDE_FROM_ALL ${TEST_SRC})
+  target_link_libraries(${TEST_BIN} m libpa1-math) # link the math and src library
+  add_dependencies(check ${TEST_BIN})
+  add_test(${TEST_BIN} ${TEST_BIN})
+
+endforeach(TEST_FILE)
+
+#-------------------------------------------------------------------------
+# Milestone test targets
+#-------------------------------------------------------------------------
+
+add_custom_target(check-milestone COMMAND ctest "-L" "milestone" "--test-timeout=10")
+
+foreach(TEST_FILE ${TEST_MILESTONE_FILES})
+
+  remove_extension(TEST_BIN ${TEST_FILE})
+  add_dependencies(check-milestone ${TEST_BIN})
+  set_tests_properties(${TEST_BIN} PROPERTIES LABELS "milestone")
+
+endforeach(TEST_FILE)
+
+#-------------------------------------------------------------------------
+# Evaluation targets
+#-------------------------------------------------------------------------
+
+add_custom_target(eval)
+
+foreach(EVAL_FILE ${EVAL_FILES})
+
+  remove_extension(EVAL_BIN ${EVAL_FILE})
+  set(EVAL_SRC "${EVAL_DIR}/${EVAL_FILE}")
+
+  # Add eval
+  add_executable(${EVAL_BIN} EXCLUDE_FROM_ALL ${EVAL_SRC})
+  target_link_libraries(${EVAL_BIN} m libpa1-math) # link the math and src library
+  add_dependencies(eval ${EVAL_BIN})
+
+endforeach(EVAL_FILE)

@@ -1,6 +1,8 @@
 
 ECE 2400 Programming Assignments
 ==========================================================================
+[![Build Status](https://travis-ci.com/cornell-ece2400/gb438.svg?token=rv3ZZbjrA1iJQdXMGLGV&branch=master)](https://travis-ci.com/cornell-ece2400/gb438)
+[![codecov](https://codecov.io/gh/cornell-ece2400/gb438/branch/master/graph/badge.svg?token=NrcTMOV7jq)](https://codecov.io/gh/cornell-ece2400/gb438)
 
 This is the code repository for your ECE 2400 programming assignments.
 You will use this repository to develop your code, run continuous
