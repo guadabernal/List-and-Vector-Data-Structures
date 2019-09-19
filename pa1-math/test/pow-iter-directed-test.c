@@ -41,8 +41,8 @@
 void test_case_1_small_large()
 {
   printf("\n%s\n", __func__  );
-  UTST_ASSERT_FLOAT_EQ( pow_iter(   1, 100 ),                      1.0000, 0.0001 );
-  UTST_ASSERT_FLOAT_EQ( pow_iter( 1.1, 300 ) / 2617010996188.4634, 1.0,    0.0001 );
+  UTST_ASSERT_FLOAT_EQ( pow_iter(   1, 100 ), 1.0000, 0.0001 );
+  UTST_ASSERT_FLOAT_EQ( pow_iter( 1.1, 300 ) / 2617010996188.4634, 1.0, 0.0001 );
 }
 
 //------------------------------------------------------------------------
@@ -57,13 +57,29 @@ void test_case_2_zero_small()
   UTST_ASSERT_FLOAT_EQ( pow_iter( 0, 2 ), 0.0000, 0.0001 );
 }
 
-//'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''''
-// Add more test cases for directed testing here
-//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+//------------------------------------------------------------------------
+// test_case_3_zero_large
+//------------------------------------------------------------------------
+// Directed tests for 0 base with large exponent
+
+void test_case_3_zero_large()
+{
+  printf("\n%s\n", __func__  );
+  UTST_ASSERT_FLOAT_EQ( pow_iter( 0, 125 ), 0.0000, 0.0001 );
+  UTST_ASSERT_FLOAT_EQ( pow_iter( 0, 3895 ), 0.0000, 0.0001 );
+}
 
 //------------------------------------------------------------------------
-// main
+// test_case_4_large_small
 //------------------------------------------------------------------------
+// Directed tests for large base with small exponent
+
+void test_case_4_large_small()
+{
+  printf("\n%s\n", __func__  );
+  UTST_ASSERT_FLOAT_EQ( pow_iter( 300, 0 ), 3, 0.0001 );
+  //UTST_ASSERT_FLOAT_EQ( pow_iter( 895, 0.01 ), 1, 0.0001 );
+}
 
 int main( int argc, char* argv[] )
 {
@@ -72,11 +88,10 @@ int main( int argc, char* argv[] )
 
   if ( ( n == 0 ) || ( n == 1 ) ) test_case_1_small_large();
   if ( ( n == 0 ) || ( n == 2 ) ) test_case_2_zero_small();
+  if ( ( n == 0 ) || ( n == 3 ) ) test_case_3_zero_large();
+  if ( ( n == 0 ) || ( n == 4 ) ) test_case_4_large_small();
 
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Add other categories for directed testing here
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
+  
   printf( "\n" );
   return 0;
 }
