@@ -9,13 +9,17 @@
 
 int sqrt_iter( int x )
 {
+  // check basic conditions first
   if( x == 0 ) return 0;
   if( x == 1 ) return 1;
-  if (x < 0 ) return -1;
+  if( x == 2 ) return 1;
+  if( x < 0 ) return -1;
 
+  // iterate through from i = 0 until the integer closest to the sqrt of x is found
   else {
     for( int i = 0; i < x; i++ ) {
-  	  if( i * i >= x ) return i - 1;
+  	  if( ( i * i ) == x ) return i;
+	  else if( ( i * i) > x ) return i - 1;
     }
   }
   return x;

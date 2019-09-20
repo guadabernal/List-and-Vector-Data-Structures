@@ -12,7 +12,8 @@ double pow_iter( double base, int exponent )
   double total = 1;
 
   // Check basic cases
-  // The first case checks 0^(-1) which is equal to infinity
+  // The first case checks 0^(-1) which is equal to infinity...
+  // ...the code is a work around for not having math.h
   if ( base == 0 ) {
     if ( exponent < 0 ) {
   	  double p;
