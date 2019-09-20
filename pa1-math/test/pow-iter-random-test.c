@@ -10,24 +10,23 @@
 #include "utst.h"
 #include "pow-iter.h"
 
-//'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''''
-// Implement your random test cases here
-//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+void test_case_1( int numIter, double base_min, double base_max, int exp_min, int exp_max )
+{
+  double base;
+  int exponent;
+  for ( int i = 0; i < numIter; ++i ) {
+    base = ( rand() / ( (double)RAND_MAX ) * ( base_max - base_min ) ) + base_min;
+    exponent = ( rand() / ( (double)RAND_MAX ) * ( exp_min - exp_max ) ) + exp_min;
+    UTST_ASSERT_FLOAT_EQ( pow_iter( base, exponent ), pow( base, exponent ), 0.0001 );  
+  }	
+}
+
 
 int main( int argc, char* argv[] ) {
 
   int n = ( argc == 1 ) ? 0 : atoi( argv[1] );
-
-  
-
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Add your random test cases here.
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-  //------------------------------------------------------------------------
-  // Students: Please comment out the following UTST_ASSERT_FALSE macro as
-  // you add your random test cases. Otherwise, you tests will never pass!!!
-  //------------------------------------------------------------------------
-  UTST_ASSERT_FALSE( n + 1 );
+  if ( n == 0 || n == 1 ) test_case_1(3, 0, 13, 1, 9);
+  //UTST_ASSERT_FALSE( n + 1 );
 
   return 0;
 }
