@@ -9,6 +9,8 @@
 double pow_iter( double base, int exponent )
 {
   double total = 1;
+  if ( base == 0 )
+  	return 0;
   if ( exponent == 0 ) 
     return 1;
   if ( exponent == -1 )
