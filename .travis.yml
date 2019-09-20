@@ -55,10 +55,10 @@ script:
   - make coverage
   - make eval
   - ./pow-iter-eval 4.2 42
-  - ./pow-recur-eval 4.2 42
+  # - ./pow-recur-eval 4.2 42
   - ./pow-std-eval 4.2 42
   - ./sqrt-iter-eval 42
-  - ./sqrt-recur-eval 42
+  # - ./sqrt-recur-eval 42
   - ./sqrt-std-eval 42
 
 #-------------------------------------------------------------------------
