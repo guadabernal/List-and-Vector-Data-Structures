@@ -22,10 +22,10 @@ void test_case_1( int numIter, double base_min, double base_max, int exp_min, in
 }
 
 
-int main( int argc, char* argv[] ) {
-
+int main( int argc, char* argv[] )
+{
   int n = ( argc == 1 ) ? 0 : atoi( argv[1] );
-  if ( n == 0 || n == 1 ) test_case_1(3, 0, 13, 1, 9);
+  if ( n == 0 || n == 1 ) test_case_1(20, 0, 13, 1, 9);
   //UTST_ASSERT_FALSE( n + 1 );
 
   return 0;
