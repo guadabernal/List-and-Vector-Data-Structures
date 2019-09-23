@@ -1,0 +1,73 @@
+#=========================================================================
+# Travis CI Configuration
+#=========================================================================
+
+language: c
+
+#-------------------------------------------------------------------------
+# addons
+#-------------------------------------------------------------------------
+# We are using lcov for coverage analysis, so we need to install lcov
+# using apt. We also need to install the newer version of gcc/g++ since
+# the default version is too old.
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - lcov
+      - g++-6
+      - cmake
+      - valgrind
+
+#-------------------------------------------------------------------------
+# install
+#-------------------------------------------------------------------------
+# We need to do a hack to make gcc default to
+# gcc-6. Normally we would just set the CC/CXX environment variables, but
+# we are not using them to simplify the Makefile we give students.
+
+install:
+  - mkdir -p latest-gcc-symlinks
+  - ln -s /usr/bin/g++-6 latest-gcc-symlinks/g++
+  - ln -s /usr/bin/gcc-6 latest-gcc-symlinks/gcc
+  - export PATH=$PWD/latest-gcc-symlinks:$PATH
+
+#-------------------------------------------------------------------------
+# before_script
+#-------------------------------------------------------------------------
+# Before running the actual test script, we create a build directory.
+
+before_script:
+  - mkdir pa1-math/build
+  - cd pa1-math/build
+  - cmake ..
+
+#-------------------------------------------------------------------------
+# script
+#-------------------------------------------------------------------------
+# Build, test, and evaluate the project. We use make coverage instead of
+# make check so that we generate the reports for code coverage analysis.
+
+script:
+  - make check
+  - make coverage
+  - make eval
+  - ./pow-iter-eval 4.2 42
+  - ./pow-recur-eval 4.2 42
+  - ./pow-std-eval 4.2 42
+  - ./sqrt-iter-eval 42
+  - ./sqrt-recur-eval 42
+  - ./sqrt-std-eval 42
+
+#-------------------------------------------------------------------------
+# after_success
+#-------------------------------------------------------------------------
+# Assuming everything worked, we upload the coverage reports to
+# codecov.io. We use -X gcov since we already ran lcov, so there is no
+# need to rerun gcov.
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -X gcov -t @.cc_token
+

@@ -149,3 +149,12 @@ foreach(EVAL_FILE ${EVAL_FILES})
   add_dependencies(eval ${EVAL_BIN})
 
 endforeach(EVAL_FILE)
+
+#-------------------------------------------------------------------------
+# Code coverage target
+#-------------------------------------------------------------------------
+
+add_custom_target(coverage
+  COMMAND lcov --capture --directory . --output-file coverage.info
+  COMMAND genhtml coverage.info --output-directory coverage-html
+)
