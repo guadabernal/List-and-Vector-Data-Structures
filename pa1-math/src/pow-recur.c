@@ -9,6 +9,8 @@
 double pow_recur( double base, int exponent )
 {
   double total = 1;
+  if( base == 0 )
+    total = 0;
   if( exponent > 0 ) {
     if( ( exponent % 2 ) == 0 )
       total = pow_recur( base * base, exponent / 2 );

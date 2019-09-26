@@ -9,11 +9,12 @@
 
 int sqrt_iter( int x )
 {
-  // check basic conditions first
-  if( x == 0 ) return 0;
-  if( x == 1 ) return 1;
-  if( x == 2 ) return 1;
-  if( x < 0 ) return -1;
+  int sqrt = 0;
+  // check initial conditions first
+  if( x == 0 ) sqrt = 0;
+  if( x == 1 ) sqrt = 1;
+  if( x == 2 ) sqrt = 1;
+  if( x < 0 ) sqrt = -1;
 
   // iterate through from i = 0 until the integer closest to the sqrt of x is found
   else {
@@ -24,5 +25,5 @@ int sqrt_iter( int x )
         return i - 1;
     }
   }
-  return x;
+  return sqrt;
 }

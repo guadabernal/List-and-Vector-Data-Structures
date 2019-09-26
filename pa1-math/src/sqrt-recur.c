@@ -9,31 +9,17 @@
 
 int help_func( int min, int max, int x )
 {
-  int ret_val = 0;
-  int temp = ( (max - min) / 2 + min ) * ( ( max - min ) / 2 + min);
-
-  if ( temp == x )
-    ret_val = ( max - min ) / 2 + min;
-  else if ( (max - min ) == 1 )
+  int m = (min + max) / 2;
+  int sqr = m * m;
+  int ret_val = m;
+  if ( (max - min ) == 1 )
     ret_val = min;
-  else if ( temp  > x )
-    ret_val = help_func( min, (max - min) / 2 + min  , x );
-  else if ( temp < x )
-    ret_val = help_func( (max - min) / 2 + min , max, x );
+  else if ( sqr  > x )
+    ret_val = help_func( min, m, x );
+  else if ( sqr < x )
+    ret_val = help_func( m, max, x );
   return ret_val;
 }
-
-// int help_func( int min, int max, int x )
-// {
-//   int m = (min + max) / 2;
-//   int ret_val = m;
-//   int sqr = m * m;
-//   if ( sqr > x )
-//     ret_val = help_func(min, m, x);
-//   else if ( sqr < x )
-//     ret_val = m;
-//   return ret_val;
-// }
 
 int sqrt_recur( int x )
 {
