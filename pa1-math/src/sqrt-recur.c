@@ -10,7 +10,7 @@
 int help_func( int min, int max, int x )
 {
   int m = (min + max) / 2;
-  int sqr = m * m;
+  int long sqr = (int long)(m) * m;
   int ret_val = m;
   if ( (max - min ) == 1 )
     ret_val = min;
@@ -23,8 +23,7 @@ int help_func( int min, int max, int x )
 
 int sqrt_recur( int x )
 {
-  if ( x < 0 ) return -1;
-  if ( x == 0 ) return 0;
-  if ( x == 1 ) return 1;
+  if( x < 0 ) return -1;
+  if( x == 1 ) return 1;
   return help_func( 0, x, x );
 }

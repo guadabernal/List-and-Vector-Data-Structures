@@ -70,6 +70,6 @@ int main( int argc, char* argv[] )
   if ( ( n == 0 ) || ( n == 2 ) ) test_case_2_negative();
   if ( ( n == 0 ) || ( n == 3 ) ) test_case_3_round_smaller();
   if ( ( n == 0 ) || ( n == 4 ) ) test_case_4_round_larger();
-  
+
   return 0;
 }
