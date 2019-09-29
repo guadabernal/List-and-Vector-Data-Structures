@@ -40,8 +40,8 @@ install:
 # Before running the actual test script, we create a build directory.
 
 before_script:
-  - mkdir pa1-math/build
-  - cd pa1-math/build
+  - mkdir pa2-dstruct/build
+  - cd pa2-dstruct/build
   - cmake ..
 
 #-------------------------------------------------------------------------
@@ -53,13 +53,13 @@ before_script:
 script:
   - make check
   - make coverage
+  - make memcheck
   - make eval
-  - ./pow-iter-eval 4.2 42
-  - ./pow-recur-eval 4.2 42
-  - ./pow-std-eval 4.2 42
-  - ./sqrt-iter-eval 42
-  - ./sqrt-recur-eval 42
-  - ./sqrt-std-eval 42
+  - ./list-push-back-eval 42
+  - ./vector-push-back-v1-eval 42
+  - ./vector-push-back-v2-eval 42
+  - ./list-find-eval 42
+  - ./vector-find-eval 42
 
 #-------------------------------------------------------------------------
 # after_success

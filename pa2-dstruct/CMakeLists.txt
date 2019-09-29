@@ -1,46 +1,39 @@
 #=========================================================================
-# CMake script for PA1
+# CMake script for PA2
 #=========================================================================
 # To add new implementations or new tests, simply append your new file to
 # the corresponding list.
 #
 # Author: Yanghui Ou
-#   Date: Sep 15, 2019
+#   Date: Sep 26, 2019
 #
 
 set(SRC_FILES
-  pow-iter.c
-  pow-recur.c
-  sqrt-iter.c
-  sqrt-recur.c
+  list.c
+  vector.c
+  ece2400-stdlib.c
 )
 
 set(TEST_MILESTONE_FILES
-  pow-iter-basic-test.c
-  pow-iter-directed-test.c
-  pow-iter-random-test.c
-  sqrt-iter-basic-test.c
-  sqrt-iter-directed-test.c
-  sqrt-iter-random-test.c
+
 )
 
 set(TEST_ALL_FILES
   ${TEST_MILESTONE_FILES}
-  pow-recur-basic-test.c
-  pow-recur-directed-test.c
-  pow-recur-random-test.c
-  sqrt-recur-basic-test.c
-  sqrt-recur-directed-test.c
-  sqrt-recur-random-test.c
+  list-basic-test.c
+  list-directed-test.c
+  list-random-test.c
+  vector-basic-test.c
+  vector-directed-test.c
+  vector-random-test.c
 )
 
 set (EVAL_FILES
-  pow-iter-eval.c
-  pow-recur-eval.c
-  pow-std-eval.c
-  sqrt-iter-eval.c
-  sqrt-recur-eval.c
-  sqrt-std-eval.c
+  list-push-back-eval.c
+  list-find-eval.c
+  vector-push-back-v1-eval.c
+  vector-push-back-v2-eval.c
+  vector-find-eval.c
 )
 
 #=========================================================================
@@ -65,7 +58,7 @@ endfunction()
 cmake_minimum_required(VERSION 2.8)
 enable_language(C)
 enable_testing()
-project(pa1-math)
+project(pa2-dstruct)
 
 # Set and cache the build type
 set(default_build_type "debug")
@@ -77,9 +70,9 @@ endif()
 message(STATUS "Setting build type to '${CMAKE_BUILD_TYPE}'")
 
 # Flags for GCC
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic-errors -Werror")
-set(CMAKE_C_FLAGS_DEBUG "-O0 -g --coverage")
-set(CMAKE_C_FLAGS_EVAL "-O3")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wvla -pedantic-errors -Werror")
+set(CMAKE_C_FLAGS_DEBUG "-O0 -g --coverage -Wno-unused-parameter")
+set(CMAKE_C_FLAGS_EVAL "-O3 -g")
 
 # Path to this PA's source files
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
@@ -158,3 +151,34 @@ add_custom_target(coverage
   COMMAND lcov --capture --directory . --output-file coverage.info
   COMMAND genhtml coverage.info --output-directory coverage-html
 )
+
+#-------------------------------------------------------------------------
+# Mem check target
+#-------------------------------------------------------------------------
+
+add_custom_target(memcheck
+  COMMAND echo ""
+  COMMAND echo "========================================================="
+  COMMAND echo " memcheck passed!"
+  COMMAND echo "========================================================="
+  COMMAND echo ""
+)
+
+foreach(TEST_FILE ${TEST_ALL_FILES})
+
+  remove_extension(TEST_BIN ${TEST_FILE})
+  add_custom_target(memcheck-${TEST_BIN}
+    COMMAND mkdir -p "memcheck-log"
+    COMMAND valgrind "--trace-children=yes"
+                     "--leak-check=full"
+                     "--error-exitcode=1"
+                     "--undef-value-errors=no"
+                     "--log-file=memcheck-log/${TEST_BIN}.log"
+                     "${CMAKE_CURRENT_BINARY_DIR}/${TEST_BIN}"
+                     "|" "sed" "-r" "\"s/\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g\""
+                     ">" "memcheck-log/${TEST_BIN}.stdout"
+    DEPENDS ${TEST_BIN}
+  )
+  add_dependencies(memcheck memcheck-${TEST_BIN})
+
+endforeach(TEST_FILE)
