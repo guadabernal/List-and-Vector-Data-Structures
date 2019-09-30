@@ -1,0 +1,17 @@
+Standard: Cpp11
+BasedOnStyle: Google
+IndentWidth: 2
+UseTab: Never
+ColumnLimit: 0
+SortIncludes: false
+SpacesInParentheses: true
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  BeforeElse: true
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignEscapedNewlines: true
+AlignTrailingComments: true
