@@ -96,7 +96,7 @@ add_library(${PROJECT_NAME} ${LIB_SRCS})
 # Test targets
 #-------------------------------------------------------------------------
 
-add_custom_target(check COMMAND ctest "--test-timeout=10")
+add_custom_target(check COMMAND ctest "--timeout" "10")
 
 foreach(TEST_FILE ${TEST_ALL_FILES})
 
@@ -115,7 +115,7 @@ endforeach(TEST_FILE)
 # Milestone test targets
 #-------------------------------------------------------------------------
 
-add_custom_target(check-milestone COMMAND ctest "-L" "milestone" "--test-timeout=10")
+add_custom_target(check-milestone COMMAND ctest "-L" "milestone" "--timeout" "10")
 
 foreach(TEST_FILE ${TEST_MILESTONE_FILES})
 
