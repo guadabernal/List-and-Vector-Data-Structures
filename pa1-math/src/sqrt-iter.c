@@ -19,9 +19,10 @@ int sqrt_iter( int x )
   // iterate through from i = 0 until the integer closest to the sqrt of x is found
   else {
     for( int i = 0; i < x; i++ ) {
-      if( ( i * i ) == x )
+      int long sqr = (int long)(i) * i;
+      if( sqr == x )
         return i;
-      else if( ( i * i) > x )
+      else if( sqr > x )
         return i - 1;
     }
   }

@@ -52,9 +52,31 @@ void test_case_2_simple_find()
   list_int_destruct( &lst );
 }
 
-//'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''''
-// Add other test cases here
-//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+//------------------------------------------------------------------------
+// test_case_3_large_find
+//------------------------------------------------------------------------
+// Push 1000 elements and see if they can still be found.
+
+void test_case_3_large_find()
+{
+  printf( "\n%s\n", __func__ );
+
+  list_int_t lst;
+  list_int_construct( &lst );
+
+  // Push back some elements
+  for ( int i = 0; i < 1000; i++ )
+    list_int_push_back( &lst, i );
+
+  // Try finding them
+  for ( int i = 0; i < 1000; i++ )
+    UTST_ASSERT_TRUE( list_int_find( &lst, i ) )
+
+  // Check size
+  UTST_ASSERT_INT_EQ( list_int_size( &lst ), 1000 );
+
+  list_int_destruct( &lst );
+}
 
 //------------------------------------------------------------------------
 // main
@@ -66,10 +88,6 @@ int main( int argc, char** argv )
 
   if ( ( __n == 0 ) || ( __n == 1 ) ) test_case_1_simple_push_back();
   if ( ( __n == 0 ) || ( __n == 2 ) ) test_case_2_simple_find();
-
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Add your test cases here
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
   return 0;
 }

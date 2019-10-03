@@ -31,15 +31,12 @@ int main() {
     list_int_construct ( &lst );
 
     // Push data into the data structure
-
     list_int_push_back( &lst, 1 );
 
     // Access and test data
-
     UTST_ASSERT_INT_EQ( list_int_at( &lst, 0 ), 1 );
 
     // Test size
-
     UTST_ASSERT_INT_EQ( list_int_size( &lst ), 1 );
 
     list_int_destruct( &lst );

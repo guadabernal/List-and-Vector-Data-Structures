@@ -53,6 +53,7 @@ int main() {
     vector_int_construct( &vec ); // space for 1 element
 
     // Push data into the data structure
+
     vector_int_push_back_v1( &vec, 1 );
     vector_int_push_back_v1( &vec, 2 );
     vector_int_push_back_v1( &vec, 3 );

@@ -56,7 +56,9 @@ void test_case_4_round_larger()
 {
   printf( "\n%s\n", __func__ );
   UTST_ASSERT_INT_EQ( sqrt_iter( 37 ), 6 );
+  UTST_ASSERT_INT_EQ( sqrt_iter( 2147395600 ), 46340 );
 }
+
 
 //------------------------------------------------------------------------
 // main
