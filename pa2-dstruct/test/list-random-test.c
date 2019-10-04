@@ -40,6 +40,7 @@ void test_case_1_write_rand()
   UTST_ASSERT_INT_EQ( list_int_size( &lst    ), list_size  );
 
   list_int_destruct( &lst );
+  free(values_in_list);
 }
 
 //------------------------------------------------------------------------
@@ -78,6 +79,7 @@ void test_case_2_check_rand()
   UTST_ASSERT_INT_EQ( list_int_size( &lst    ), list_size  );
 
   list_int_destruct( &lst );
+  free(values_in_list);
 }
 
 //------------------------------------------------------------------------
@@ -118,6 +120,7 @@ void test_case_3_find_rand()
   UTST_ASSERT_INT_EQ( list_int_size( &lst    ), list_size  );
 
   list_int_destruct( &lst );
+  free(values_in_list);
 }
 
 //------------------------------------------------------------------------

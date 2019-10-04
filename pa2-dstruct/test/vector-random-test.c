@@ -40,6 +40,7 @@ void test_case_1_simple()
   UTST_ASSERT_INT_EQ( vector_int_size( &vec    ), vec_size  );
 
   vector_int_destruct( &vec );
+  free(values_in_vec);
 }
 
 //------------------------------------------------------------------------
@@ -79,6 +80,7 @@ void test_case_2_check_rand()
   UTST_ASSERT_INT_EQ( vector_int_size( &vec    ), vec_size  );
 
   vector_int_destruct( &vec );
+  free(values_in_vec);
 }
 
 //------------------------------------------------------------------------
@@ -118,6 +120,7 @@ void test_case_3_find_rand()
   UTST_ASSERT_INT_EQ( vector_int_size( &vec    ), vec_size  );
 
   vector_int_destruct( &vec );
+  free(values_in_vec);
 }
 
 //------------------------------------------------------------------------
@@ -157,6 +160,7 @@ void test_case_4_check_v2_rand()
   UTST_ASSERT_INT_EQ( vector_int_size( &vec    ), vec_size  );
 
   vector_int_destruct( &vec );
+  free(values_in_vec);
 }
 
 //------------------------------------------------------------------------
