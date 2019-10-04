@@ -175,8 +175,10 @@ foreach(TEST_FILE ${TEST_ALL_FILES})
                      "--undef-value-errors=no"
                      "--log-file=memcheck-log/${TEST_BIN}.log"
                      "${CMAKE_CURRENT_BINARY_DIR}/${TEST_BIN}"
-                     "|" "sed" "-r" "\"s/\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g\""
-                     ">" "memcheck-log/${TEST_BIN}.stdout"
+                     ">" "memcheck-log/${test_bin}.stdout"
+    COMMAND sed "-r" "\"s/\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g\""
+                "memcheck-log/${test_bin}.stdout"
+                ">" "memcheck-log/${test_bin}.stdout"
     DEPENDS ${TEST_BIN}
   )
   add_dependencies(memcheck memcheck-${TEST_BIN})
