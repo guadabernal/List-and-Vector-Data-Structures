@@ -88,6 +88,7 @@ int main( int argc, char** argv )
 
   if ( ( __n == 0 ) || ( __n == 1 ) ) test_case_1_simple_push_back();
   if ( ( __n == 0 ) || ( __n == 2 ) ) test_case_2_simple_find();
+  if ( ( __n == 0 ) || ( __n == 3 ) ) test_case_3_large_find();
 
   return 0;
 }
