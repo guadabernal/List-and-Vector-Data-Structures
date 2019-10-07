@@ -36,17 +36,24 @@ void list_int_construct( list_int_t* this )
 
 void list_int_destruct( list_int_t* this )
 {
+  // Iterate through all the nodes
+  // Make sure there are no pointer to dealocated memory before freeing the node
   while ( this->head_ptr != NULL ) {
     node_t* temp = this->head_ptr;
-    if ( this->head_ptr == NULL ) {
-      return;
-    }
+
+    // Set the pointer pointing to the current node being destructed to null
+    // Head_ptr -> <- B -> <- C -> <- ...         Head_ptr -> B
     if ( this->head_ptr->next_ptr != NULL ) {
       this->head_ptr->next_ptr->prev_ptr = NULL;
     }
+
+    // If the head is equal to the tail, set tail to NULL
+    // Head -> <- Tail   Head -> Tail
     if ( this->tail_ptr == this->head_ptr ) {
       this->tail_ptr = NULL;
     }
+
+    // Move to the next node and free the allocated memory
     this->head_ptr = this->head_ptr->next_ptr;
     ece2400_free ( temp );
   }
@@ -69,18 +76,29 @@ size_t list_int_size( list_int_t* this )
 
 void list_int_push_back( list_int_t* this, int value )
 {
+  // Creates a new node and assigns its 'value' field value
   node_t* new_node = ( node_t* ) ece2400_malloc ( sizeof ( node_t ) );
   new_node->value = value;
-  if ( this->tail_ptr != NULL ) this->tail_ptr->next_ptr = new_node;
-  new_node->prev_ptr = this->tail_ptr;
+
+
+  // Assign values to the new node's pointer variables. If the tail_ptr is not null
+  // then tail_ptr->next_ptr must be re-assigned before the tail_ptr is moved to the new_node
+  if ( this->tail_ptr != NULL ) {
+    this->tail_ptr->next_ptr = new_node;
+    new_node->prev_ptr = this->tail_ptr;
+  }
+  else {
+    new_node->prev_ptr = NULL;
+  }
   new_node->next_ptr = NULL;
+
+  // Modifies the 'this' tail pointer and if necessary, (in the case that this is
+  // the first node) the head_ptr, to point at the new node as well
   this->tail_ptr = new_node;
   if ( this->head_ptr == NULL ) this->head_ptr = new_node;
-  this->size = this->size + 1;
 
-  // debugging
-  // printf("pushed value %d to back\n", value);
-  // list_int_print( this );
+  // Increment the size of the list
+  this->size = this->size + 1;
 }
 
 //------------------------------------------------------------------------
@@ -91,19 +109,15 @@ void list_int_push_back( list_int_t* this, int value )
 
 int list_int_at( list_int_t* this, size_t idx )
 {
-  // debugging
-  // printf("pushed value %d to back\n", value);
-  // printf("checking value at idx = %zu\n", idx);
-  // list_int_print( this );
-
+  // Checks if the index is larger than the size and returns 0
   if( (int)idx > this->size ) {
-    printf("MESSAGE: index larger than size size = %d idx = %zu \n", this->size, idx);
     return 0;
   }
 
   int i = 0;
   node_t* temp = this->head_ptr;
 
+  // Iterates through idx nodes with the temp variable and returns the value at the idx index
   while( i != (int)idx ) {
     temp = temp->next_ptr;
     i++;
@@ -120,12 +134,16 @@ int list_int_at( list_int_t* this, size_t idx )
 int list_int_find( list_int_t* this, int value )
 {
   node_t* temp = this->head_ptr;
+
+  // if the value is found return 1, else traverse to the next node until
+  // the null node is reached, then return 0
   while ( temp != NULL ) {
     if ( temp->value == value ) {
       return 1;
     }
     temp = temp->next_ptr;
   }
+
   return 0;
 }
 
@@ -136,10 +154,14 @@ int list_int_find( list_int_t* this, int value )
 
 void list_int_print( list_int_t* this )
 {
+  // Use a temp variable to help itterate through the list
   node_t* temp = this->head_ptr;
+
+  // Iterrate through the nodes printing their value until the node is null
   while ( temp != NULL ) {
     printf ( "%d  ", temp->value );
     temp = temp->next_ptr;
   }
+
   printf("\n");
 }
