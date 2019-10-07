@@ -6,13 +6,17 @@
 #ifndef LIST_H
 #define LIST_H
 
+typedef struct _node_t {
+  int     value;
+  struct _node_t* next_ptr;
+  struct _node_t* prev_ptr;
+}
+node_t;
+
 typedef struct {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Define fields for list_int_t
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-  // We define a dummy field here to avoid warnings in the released code.
-  // Please delete this field as you implement your data structure!
-  int dummy;
+  int     size;
+  node_t* head_ptr;
+  node_t* tail_ptr;
 }
 list_int_t;
 

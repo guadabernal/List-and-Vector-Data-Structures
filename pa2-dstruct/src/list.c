@@ -23,9 +23,9 @@
 
 void list_int_construct( list_int_t* this )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+  this->head_ptr = NULL;
+  this->tail_ptr = NULL;
+  this->size = 0;
 }
 
 //------------------------------------------------------------------------
@@ -36,9 +36,20 @@ void list_int_construct( list_int_t* this )
 
 void list_int_destruct( list_int_t* this )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+  while ( this->head_ptr != NULL ) {
+    node_t* temp = this->head_ptr;
+    if ( this->head_ptr == NULL ) {
+      return;
+    }
+    if ( this->head_ptr->next_ptr != NULL ) {
+      this->head_ptr->next_ptr->prev_ptr = NULL;
+    }
+    if ( this->tail_ptr == this->head_ptr ) {
+      this->tail_ptr = NULL;
+    }
+    this->head_ptr = this->head_ptr->next_ptr;
+    ece2400_free ( temp );
+  }
 }
 
 //------------------------------------------------------------------------
@@ -48,11 +59,7 @@ void list_int_destruct( list_int_t* this )
 
 size_t list_int_size( list_int_t* this )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-  return 0;
+  return this->size;
 }
 
 //------------------------------------------------------------------------
@@ -62,9 +69,18 @@ size_t list_int_size( list_int_t* this )
 
 void list_int_push_back( list_int_t* this, int value )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+  node_t* new_node = ( node_t* ) ece2400_malloc ( sizeof ( node_t ) );
+  new_node->value = value;
+  if ( this->tail_ptr != NULL ) this->tail_ptr->next_ptr = new_node;
+  new_node->prev_ptr = this->tail_ptr;
+  new_node->next_ptr = NULL;
+  this->tail_ptr = new_node;
+  if ( this->head_ptr == NULL ) this->head_ptr = new_node;
+  this->size = this->size + 1;
+
+  // debugging
+  printf("pushed value %d to back\n", value);
+  list_int_print( this );
 }
 
 //------------------------------------------------------------------------
@@ -75,12 +91,16 @@ void list_int_push_back( list_int_t* this, int value )
 
 int list_int_at( list_int_t* this, size_t idx )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+  if( (int)idx > this->size ) return 0;
 
-  return 0;
+  int i = 0;
+  node_t* temp = this->head_ptr;
 
+  while( i != (int)idx ) {
+    temp = this->head_ptr->next_ptr;
+    i++;
+  }
+  return temp->value;
 }
 
 //------------------------------------------------------------------------
@@ -91,12 +111,13 @@ int list_int_at( list_int_t* this, size_t idx )
 
 int list_int_find( list_int_t* this, int value )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
+  while ( this->head_ptr != NULL ) {
+    if ( this->head_ptr->value == value ) {
+      return 1;
+    }
+    this->head_ptr = this->head_ptr->next_ptr;
+  }
   return 0;
-
 }
 
 //------------------------------------------------------------------------
@@ -106,8 +127,9 @@ int list_int_find( list_int_t* this, int value )
 
 void list_int_print( list_int_t* this )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function. We will not test this function. Use it for
-  // your own debugging purpose.
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+  node_t* temp = this->head_ptr;
+  while ( temp != NULL ) {
+    printf ( "node in list = %d\n", temp->value );
+    temp = temp->next_ptr;
+  }
 }

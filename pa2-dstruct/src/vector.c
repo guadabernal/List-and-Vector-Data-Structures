@@ -23,9 +23,7 @@
 
 void vector_int_construct( vector_int_t* this )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 }
 
 //------------------------------------------------------------------------
@@ -36,9 +34,7 @@ void vector_int_construct( vector_int_t* this )
 
 void vector_int_destruct( vector_int_t* this )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 }
 
 //------------------------------------------------------------------------
@@ -48,9 +44,6 @@ void vector_int_destruct( vector_int_t* this )
 
 size_t vector_int_size( vector_int_t* this )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
   return 0;
 }
@@ -63,9 +56,7 @@ size_t vector_int_size( vector_int_t* this )
 
 void vector_int_push_back_v1( vector_int_t* this, int value )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 }
 
 //------------------------------------------------------------------------
@@ -76,9 +67,7 @@ void vector_int_push_back_v1( vector_int_t* this, int value )
 
 void vector_int_push_back_v2( vector_int_t* this, int value )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 }
 
 //------------------------------------------------------------------------
@@ -89,9 +78,6 @@ void vector_int_push_back_v2( vector_int_t* this, int value )
 
 int vector_int_at( vector_int_t* this, size_t idx )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
   return 0;
 
@@ -105,9 +91,6 @@ int vector_int_at( vector_int_t* this, size_t idx )
 
 int vector_int_find( vector_int_t* this, int value )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
   return 0;
 
@@ -120,8 +103,5 @@ int vector_int_find( vector_int_t* this, int value )
 
 void vector_int_print( vector_int_t* this )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function. We will not test this function. Use it for
-  // your own debugging purpose.
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+  
 }

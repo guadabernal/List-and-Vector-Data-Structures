@@ -108,7 +108,7 @@ void test_case_3_find_rand()
     values_in_list[i]  =  num;
   }
 
-  // Assert that  a random number of random nodes within the list have thecorrect values assigned
+  // Assert that  a random number of random nodes within the list have the correct values assigned
   for( int  i = 0; i < num_values_check; i++) {
     int node_to_check = (rand() % (list_size + 1)) + list_size;
     UTST_ASSERT_INT_EQ( list_int_find( &lst, values_in_list[node_to_check]), 1);

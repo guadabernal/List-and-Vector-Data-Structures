@@ -116,9 +116,4 @@ int main( int argc, char** argv )
   if ( ( __n == 0 ) || ( __n == 2 ) ) test_case_2_simple_find();
   if ( ( __n == 0 ) || ( __n == 3 ) ) test_case_3_large_find();
   if ( ( __n == 0 ) || ( __n == 4 ) ) test_case_4_large_find_v2();
-
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Add your test cases here
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
 }
