@@ -71,7 +71,7 @@ void test_case_2_check_rand()
 
   // Assert that  a random number of random nodes within the list have the correct values assigned
   for( int  i = 0; i < num_values_check; i++) {
-    int node_to_check = (rand() % (list_size + 1)) + list_size;
+    int node_to_check = rand() % list_size; // this will find values btwn 0 and lis_size - 1
     UTST_ASSERT_INT_EQ( list_int_at( &lst, node_to_check), values_in_list[node_to_check]);
   }
 
@@ -97,7 +97,7 @@ void test_case_3_find_rand()
   // Defines a list, constructs  it, define variables and array size
   list_int_t lst;
   list_int_construct( &lst );
-  const int list_size  = rand()%100;
+  const int list_size  = 5; //rand()%100;
   int *values_in_list = (int *)malloc(list_size * sizeof(int));
   int num_values_check = rand()%100;
 
@@ -110,7 +110,7 @@ void test_case_3_find_rand()
 
   // Assert that  a random number of random nodes within the list have the correct values assigned
   for( int  i = 0; i < num_values_check; i++) {
-    int node_to_check = (rand() % (list_size + 1)) + list_size;
+    int node_to_check = rand() % (list_size); // this will find values btwn 0 and lis_size - 1
     UTST_ASSERT_INT_EQ( list_int_find( &lst, values_in_list[node_to_check]), 1);
   }
 
@@ -133,7 +133,7 @@ int main( int argc, char** argv )
 
   if ( ( __n == 0 ) || ( __n == 1 ) ) test_case_1_write_rand();
   if ( ( __n == 0 ) || ( __n == 2 ) ) test_case_2_check_rand();
-  if ( ( __n == 0 ) || ( __n == 2 ) ) test_case_3_find_rand();
+  if ( ( __n == 0 ) || ( __n == 3 ) ) test_case_3_find_rand();
 
   return 0;
 }

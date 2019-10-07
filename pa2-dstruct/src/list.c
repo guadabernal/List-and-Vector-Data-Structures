@@ -79,8 +79,8 @@ void list_int_push_back( list_int_t* this, int value )
   this->size = this->size + 1;
 
   // debugging
-  printf("pushed value %d to back\n", value);
-  list_int_print( this );
+  // printf("pushed value %d to back\n", value);
+  // list_int_print( this );
 }
 
 //------------------------------------------------------------------------
@@ -91,13 +91,21 @@ void list_int_push_back( list_int_t* this, int value )
 
 int list_int_at( list_int_t* this, size_t idx )
 {
-  if( (int)idx > this->size ) return 0;
+  // debugging
+  // printf("pushed value %d to back\n", value);
+  // printf("checking value at idx = %zu\n", idx);
+  // list_int_print( this );
+
+  if( (int)idx > this->size ) {
+    printf("MESSAGE: index larger than size size = %d idx = %zu \n", this->size, idx);
+    return 0;
+  }
 
   int i = 0;
   node_t* temp = this->head_ptr;
 
   while( i != (int)idx ) {
-    temp = this->head_ptr->next_ptr;
+    temp = temp->next_ptr;
     i++;
   }
   return temp->value;
@@ -111,11 +119,12 @@ int list_int_at( list_int_t* this, size_t idx )
 
 int list_int_find( list_int_t* this, int value )
 {
-  while ( this->head_ptr != NULL ) {
-    if ( this->head_ptr->value == value ) {
+  node_t* temp = this->head_ptr;
+  while ( temp != NULL ) {
+    if ( temp->value == value ) {
       return 1;
     }
-    this->head_ptr = this->head_ptr->next_ptr;
+    temp = temp->next_ptr;
   }
   return 0;
 }
@@ -129,7 +138,8 @@ void list_int_print( list_int_t* this )
 {
   node_t* temp = this->head_ptr;
   while ( temp != NULL ) {
-    printf ( "node in list = %d\n", temp->value );
+    printf ( "%d  ", temp->value );
     temp = temp->next_ptr;
   }
+  printf("\n");
 }
