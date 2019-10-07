@@ -7,12 +7,9 @@
 #define VECTOR_H
 
 typedef struct {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Define fields for vector_int_t
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-  // We define a dummy field here to avoid warnings in the released code.
-  // Please delete this field as you implement your data structure!
-  int dummy;
+  size_t size;
+  size_t maxsize;
+  int*   array;
 }
 vector_int_t;
 

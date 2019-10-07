@@ -84,8 +84,8 @@ void list_int_push_back( list_int_t* this, int value )
   // Assign values to the new node's pointer variables. If the tail_ptr is not null
   // then tail_ptr->next_ptr must be re-assigned before the tail_ptr is moved to the new_node
   if ( this->tail_ptr != NULL ) {
-    this->tail_ptr->next_ptr = new_node;
-    new_node->prev_ptr = this->tail_ptr;
+    this->tail_ptr->next_ptr  = new_node;
+    new_node->prev_ptr        = this->tail_ptr;
   }
   else {
     new_node->prev_ptr = NULL;

@@ -23,7 +23,11 @@
 
 void vector_int_construct( vector_int_t* this )
 {
+  this->size = 0;
+  this->maxsize = 0;
 
+  // malloc here to size of 1?
+  this->array = ( int* ) ece2400_malloc ( sizeof ( int ) );
 }
 
 //------------------------------------------------------------------------
@@ -34,7 +38,13 @@ void vector_int_construct( vector_int_t* this )
 
 void vector_int_destruct( vector_int_t* this )
 {
+  // Free the allocated memory
+  ece2400_free ( this->array );
 
+  // Reset the vector elements
+  this->array = NULL;
+  this->size = 0;
+  this->maxsize = 0;
 }
 
 //------------------------------------------------------------------------
@@ -44,8 +54,7 @@ void vector_int_destruct( vector_int_t* this )
 
 size_t vector_int_size( vector_int_t* this )
 {
-
-  return 0;
+  return this->size;
 }
 
 //------------------------------------------------------------------------
@@ -56,7 +65,15 @@ size_t vector_int_size( vector_int_t* this )
 
 void vector_int_push_back_v1( vector_int_t* this, int value )
 {
+  // If necessary allocate more mmemory
+  if( this->size == this->maxsize ) {
+     // Allocate one more spot
+     this->maxsize = this->maxsize + 1;
+  }
 
+  // Insert 'value' into the array and increment the size
+  (this->array)[this->size + 1] = value;
+  this->size = this->size + 1;
 }
 
 //------------------------------------------------------------------------
@@ -67,7 +84,14 @@ void vector_int_push_back_v1( vector_int_t* this, int value )
 
 void vector_int_push_back_v2( vector_int_t* this, int value )
 {
+  if( this->size == this->maxsize ) {
+     // Allocate twice the current maxsize
+     this->maxsize = this->maxsize * 2;
+  }
 
+  // Insert 'value' into the array and increment the size
+  (this->array)[this->size + 1] = value;
+  this->size = this->size + 1;
 }
 
 //------------------------------------------------------------------------
@@ -78,9 +102,10 @@ void vector_int_push_back_v2( vector_int_t* this, int value )
 
 int vector_int_at( vector_int_t* this, size_t idx )
 {
-
-  return 0;
-
+  if( idx > this->size ) {
+    return 0;
+  }
+  return this->array[idx];
 }
 
 //------------------------------------------------------------------------
@@ -91,9 +116,16 @@ int vector_int_at( vector_int_t* this, size_t idx )
 
 int vector_int_find( vector_int_t* this, int value )
 {
+  size_t i = 0;
 
+  // Iterates through the array until i is size and returns 1 if 'value' is found
+  while ( i < this->size ) {
+    if ( this->array[i] == value ) {
+      return 1;
+    }
+    i++;
+  }
   return 0;
-
 }
 
 //------------------------------------------------------------------------
@@ -103,5 +135,8 @@ int vector_int_find( vector_int_t* this, int value )
 
 void vector_int_print( vector_int_t* this )
 {
-  
+  for( int i = 0; i < (int)this->size; i++ ){
+    printf("term i = %d  has value of %d\n", i, this->array[i]);
+  }
+
 }
