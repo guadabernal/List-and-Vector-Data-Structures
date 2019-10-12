@@ -7,14 +7,14 @@
 #define LIST_H
 
 typedef struct _node_t {
-  int     value;
+  size_t          value;
   struct _node_t* next_ptr;
   struct _node_t* prev_ptr;
 }
 node_t;
 
 typedef struct {
-  int     size;
+  size_t  size;
   node_t* head_ptr;
   node_t* tail_ptr;
 }

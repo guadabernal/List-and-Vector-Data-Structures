@@ -36,27 +36,18 @@ void list_int_construct( list_int_t* this )
 
 void list_int_destruct( list_int_t* this )
 {
-  // Iterate through all the nodes
-  // Make sure there are no pointer to dealocated memory before freeing the node
+  // Iterate through all the nodes dealocate memory
   while ( this->head_ptr != NULL ) {
     node_t* temp = this->head_ptr;
-
-    // Set the pointer pointing to the current node being destructed to null
-    // Head_ptr -> <- B -> <- C -> <- ...         Head_ptr -> B
-    if ( this->head_ptr->next_ptr != NULL ) {
-      this->head_ptr->next_ptr->prev_ptr = NULL;
-    }
-
-    // If the head is equal to the tail, set tail to NULL
-    // Head -> <- Tail   Head -> Tail
-    if ( this->tail_ptr == this->head_ptr ) {
-      this->tail_ptr = NULL;
-    }
 
     // Move to the next node and free the allocated memory
     this->head_ptr = this->head_ptr->next_ptr;
     ece2400_free ( temp );
   }
+
+  // Reset values in this
+  this->size = 0;
+  this->tail_ptr = NULL;
 }
 
 //------------------------------------------------------------------------
@@ -98,7 +89,7 @@ void list_int_push_back( list_int_t* this, int value )
   if ( this->head_ptr == NULL ) this->head_ptr = new_node;
 
   // Increment the size of the list
-  this->size = this->size + 1;
+  this->size++;
 }
 
 //------------------------------------------------------------------------
@@ -110,19 +101,20 @@ void list_int_push_back( list_int_t* this, int value )
 int list_int_at( list_int_t* this, size_t idx )
 {
   // Checks if the index is larger than the size and returns 0
-  if( (int)idx > this->size ) {
+  if( idx >= this->size ) {
     return 0;
   }
 
-  int i = 0;
-  node_t* temp = this->head_ptr;
+  // Iterates through idx nodes with the temp variable and returns
+  // the value at the idx index
+  node_t* temp;
 
-  // Iterates through idx nodes with the temp variable and returns the value at the idx index
-  while( i != (int)idx ) {
+  temp = this->head_ptr;
+  for( size_t i = 0; i < idx; i++ ){
     temp = temp->next_ptr;
-    i++;
   }
-  return temp->value;
+
+  return (int)temp->value;
 }
 
 //------------------------------------------------------------------------
@@ -138,7 +130,7 @@ int list_int_find( list_int_t* this, int value )
   // if the value is found return 1, else traverse to the next node until
   // the null node is reached, then return 0
   while ( temp != NULL ) {
-    if ( temp->value == value ) {
+    if ( (int)temp->value == value ) {
       return 1;
     }
     temp = temp->next_ptr;
@@ -159,7 +151,7 @@ void list_int_print( list_int_t* this )
 
   // Iterrate through the nodes printing their value until the node is null
   while ( temp != NULL ) {
-    printf ( "%d  ", temp->value );
+    printf ( "%zu  ", temp->value );
     temp = temp->next_ptr;
   }
 

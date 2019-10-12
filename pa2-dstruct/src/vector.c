@@ -24,9 +24,9 @@
 void vector_int_construct( vector_int_t* this )
 {
   this->size = 0;
-  this->maxsize = 0;
+  this->maxsize = 1;
 
-  // malloc here to size of 1?
+  // Allocate  space for 1 element
   this->array = ( int* ) ece2400_malloc ( sizeof ( int ) );
 }
 
@@ -65,15 +65,24 @@ size_t vector_int_size( vector_int_t* this )
 
 void vector_int_push_back_v1( vector_int_t* this, int value )
 {
-  // If necessary allocate more mmemory
+  int* temp = NULL;
+
+  // If necessary allocate more mmemory and free the previous memory
   if( this->size == this->maxsize ) {
-     // Allocate one more spot
-     this->maxsize = this->maxsize + 1;
+    int newsize = (int)(this->maxsize) + 1;
+    temp = ( int* ) ece2400_malloc ( ( newsize ) * sizeof ( int ) );
+
+    for( size_t i = 0; i < this->size; ++i ){
+      temp[i] = this->array[i];
+    }
+    ece2400_free(this->array);
+    this->array = temp;
+    this->maxsize++;
   }
 
-  // Insert 'value' into the array and increment the size
-  (this->array)[this->size + 1] = value;
-  this->size = this->size + 1;
+  // Insert 'value' into the array increment the size
+  this->array[this->size] = value;
+  this->size++;
 }
 
 //------------------------------------------------------------------------
@@ -84,14 +93,24 @@ void vector_int_push_back_v1( vector_int_t* this, int value )
 
 void vector_int_push_back_v2( vector_int_t* this, int value )
 {
+  int* temp = NULL;
+
+  // If necessary allocate more mmemory and free the previous memory
   if( this->size == this->maxsize ) {
-     // Allocate twice the current maxsize
-     this->maxsize = this->maxsize * 2;
+    int newsize = (int)(this->maxsize) * 2;
+    temp = ( int* ) ece2400_malloc ( ( newsize ) * sizeof ( int ) );
+
+    for( size_t i = 0; i < this->size; ++i ){
+      temp[i] = this->array[i];
+    }
+    ece2400_free(this->array);
+    this->array = temp;
+    this->maxsize++;
   }
 
-  // Insert 'value' into the array and increment the size
-  (this->array)[this->size + 1] = value;
-  this->size = this->size + 1;
+  // Insert 'value' into the array increment the size
+  (this->array)[this->size] = value;
+  this->size++;
 }
 
 //------------------------------------------------------------------------
@@ -138,5 +157,4 @@ void vector_int_print( vector_int_t* this )
   for( int i = 0; i < (int)this->size; i++ ){
     printf("term i = %d  has value of %d\n", i, this->array[i]);
   }
-
 }

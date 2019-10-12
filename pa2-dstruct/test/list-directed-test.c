@@ -18,6 +18,7 @@ void test_case_1_simple_push_back()
 
   list_int_t lst;
   list_int_construct( &lst );
+  UTST_ASSERT_INT_EQ( list_int_at  ( &lst, 0 ), 0 );
 
   list_int_push_back( &lst, 0x22222bad );
   UTST_ASSERT_INT_EQ( list_int_size( &lst    ), 1          );

@@ -21,7 +21,7 @@ void test_case_1_write_rand()
   // Defines a list, constructs  it, define variables and array size
   list_int_t lst;
   list_int_construct( &lst );
-  const int list_size  = rand()%100;
+  const int list_size  = 10;//rand()%100;
   int *values_in_list = (int *)malloc(list_size * sizeof(int));
 
   // Fill list with random numbers and add to the  array

@@ -72,7 +72,7 @@ void test_case_2_check_rand()
   // Assert that  a random number of random nodes within the list
   // have the correct values assigned
   for( int  i = 0; i < num_values_check; i++) {
-    int node_to_check = (rand() % (vec_size + 1)) + vec_size;
+    int node_to_check = rand() % vec_size;
     UTST_ASSERT_INT_EQ( vector_int_at( &vec, node_to_check), values_in_vec[node_to_check]);
   }
 
@@ -108,10 +108,10 @@ void test_case_3_find_rand()
     values_in_vec[i] = num;
   }
 
-  // Assert that  a random number of random nodes within the list have thecorrect values assigned
+  // Assert that  a random number of random nodes within the list have the correct values assigned
   for( int  i = 0; i < vec_size; i++) {
-    int node_to_check = (rand() % (vec_size + 1)) + vec_size;
-    UTST_ASSERT_INT_EQ( vector_int_at( &vec, values_in_vec[node_to_check]), 1);
+    int node_to_check = rand() % vec_size;
+    UTST_ASSERT_INT_EQ( vector_int_find( &vec, values_in_vec[node_to_check]), 1);
   }
 
   //  <<<<<<<<<<<<<<<<<<<< check when values_in_list returns 0 (value not in list) ????  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -146,13 +146,13 @@ void test_case_4_check_v2_rand()
   for( int  i = 0; i < vec_size; i++) {
     int num = rand()%100;
     vector_int_push_back_v2( &vec, num );
-    values_in_vec[vec_size - i] = num;
+    values_in_vec[i] = num;
   }
 
   // Assert that  a random number of random nodes within the list
   // have the correct values assigned
   for( int  i = 0; i < num_values_check; i++) {
-    int node_to_check = (rand() % (vec_size + 1)) + vec_size;
+    int node_to_check = rand() % vec_size;
     UTST_ASSERT_INT_EQ( vector_int_at( &vec, node_to_check), values_in_vec[node_to_check]);
   }
 
@@ -174,7 +174,7 @@ int main( int argc, char** argv )
   if ( ( __n == 0 ) || ( __n == 1 ) ) test_case_1_simple();
   if ( ( __n == 0 ) || ( __n == 2 ) ) test_case_1_simple();
   if ( ( __n == 0 ) || ( __n == 3 ) ) test_case_3_find_rand();
-  if ( ( __n == 0 ) || ( __n == 3 ) ) test_case_4_check_v2_rand();
+  if ( ( __n == 0 ) || ( __n == 4 ) ) test_case_4_check_v2_rand();
 
   return 0;
 }
